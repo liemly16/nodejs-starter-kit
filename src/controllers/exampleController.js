@@ -4,7 +4,7 @@ import {
 import CrudController from './crudController'
 
 
-export default class AgendaSpeakerController extends CrudController {
+export default class ExampleController extends CrudController {
     constructor() {
         super(Example)
     }

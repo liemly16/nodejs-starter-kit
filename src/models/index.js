@@ -4,6 +4,6 @@ import Example from './example'
 export {
     Sequelize,
     sequelize,
-
+    
     Example,
 }
