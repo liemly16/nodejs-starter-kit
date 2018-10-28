@@ -63,12 +63,12 @@ export default class CrudRouter extends BaseRouter {
   }
 
   async delete(req, res) {
-    await this.Controller.delete(req.params)
-    this.onSuccess(res)
+    let result = await this.Controller.delete(req.params)
+    this.onSuccess(res, result)
   }
 
   async getItem(req, res) {
-    req.item = await this.Controller.getItem(req.params, req.scopes, req.fields)
+    req.item = await this.Controller.getItem(req.params)
     this.onSuccess(res, req.item)
   }
 
@@ -79,19 +79,14 @@ export default class CrudRouter extends BaseRouter {
 
   async update(req, res) {
     req.body = Object.assign(req.body, req.params)
-    res.item = await this.Controller.update(req.body, req.scopes)
+    res.item = await this.Controller.update(req.body)
     this.onSuccess(res, res.item)
   }
 
   async deleteAll(req, res) {
-    let { items } = req.query
-    try {
-      items = JSON.parse(items);
-    } catch (err) {
-      items = null;
-    }
-    req.params.id = items
-    res.items = await this.Controller.deleteAll(req.params)
+    req.query.ids = JSON.parse(req.query.ids);
+    res.items = await this.Controller.deleteAll(req.query)
     this.onSuccess(res, { deleted: res.items })
   }
+
 }

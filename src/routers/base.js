@@ -26,7 +26,7 @@ import {
       } else {
         res.json({
           code: 200,
-          results: object
+          result: object
         })
       }
     }
