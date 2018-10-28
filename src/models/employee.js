@@ -4,21 +4,31 @@ import {
 } from './base'
 
 export default sequelize.define(
-    'tbl_example',
+    'tbl_employee',
     {
         id: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV1,
             primaryKey: true
         },
-        name: {
+        fullname: {
             type: Sequelize.STRING
         },
-        employee_id: {
-            type: Sequelize.UUID,
-            references: {
-                model: 'tbl_employee',
-                key: 'id'
+        email: {
+            type: Sequelize.STRING
+        },
+        password: {
+            type: Sequelize.STRING
+        },
+        avatar: {
+            type: Sequelize.STRING
+        },
+        type: {
+            type: Sequelize.STRING,
+            validate: {
+                isIn: [
+                    ['MANAGER', 'SELLER']
+                ]
             }
         },
         created_at: {

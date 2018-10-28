@@ -40,7 +40,6 @@ export default class CrudControler {
     async getList(params) {
         return await this.Model.findAll({
             where: {
-
             }
         });
     }
