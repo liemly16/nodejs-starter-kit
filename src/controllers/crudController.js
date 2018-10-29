@@ -16,6 +16,7 @@ export default class CrudControler {
                 throw errorService.error("Record not found");
             return result;
         } catch (err) {
+            console.log(err);
             if (err.errors) {
                 console.log("@@@@@@@@@@@@@@@@@@@");
                 if (err.errors && err.errors[0]) {
@@ -40,16 +41,29 @@ export default class CrudControler {
         }))
     }
 
-    async getItem(params) {
-        return await this.exec(this.Model.findOne({
+    async getItem(params, fields) {
+        return await this.exec(this.Model.findOne(Object.assign({
             where: params
-        }));
+        }, fields)));
     }
 
-    async getList(params) {
-        return await this.exec(this.Model.findAll({
+    async getList(params, pageInfo = {}, fields = {}) {
+        let query = Object.assign({
+            where: params,
+            limit: pageInfo.limit,
+            offset: pageInfo.offset
+        }, fields)
+
+        let records = await this.exec(this.Model.findAll(query));
+        let count = await this.exec(this.Model.count({
             where: params
         }));
+
+        return {
+            count,
+            records
+        }
+
     }
 
     async update(params, filter) {

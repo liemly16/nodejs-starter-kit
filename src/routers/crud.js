@@ -1,5 +1,6 @@
 import express from 'express'
 import BaseRouter from './base'
+import {queryMiddlware} from '../middlewares'
 
 export default class CrudRouter extends BaseRouter {
   constructor(Controller) {
@@ -24,21 +25,20 @@ export default class CrudRouter extends BaseRouter {
   }
 
   getListMiddlewares() {
-   
     return [
-    
+      queryMiddlware.run()
     ]
   }
 
   getItemMiddlewares() {
     return [
-     
+      queryMiddlware.run()
     ]
   }
 
   createMiddlewares() {
     return [
-     
+
     ]
   }
 
@@ -68,12 +68,13 @@ export default class CrudRouter extends BaseRouter {
   }
 
   async getItem(req, res) {
-    req.item = await this.Controller.getItem(req.params)
+    req.item = await this.Controller.getItem(req.params, req.fields)
     this.onSuccess(res, req.item)
   }
 
   async getList(req, res) {
-    req.items = await this.Controller.getList(req.params)
+    console.log(req.fields);
+    req.items = await this.Controller.getList(req.filter, req.pageInfo, req.fields);
     this.onSuccessAsList(res, req.items, undefined, req.pageInfo)
   }
 
