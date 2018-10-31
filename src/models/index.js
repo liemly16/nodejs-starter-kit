@@ -7,7 +7,7 @@ import Bill from './bill'
 export {
     Sequelize,
     sequelize,
-    
+
     Example,
     Employee,
     Film,
