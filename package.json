@@ -17,7 +17,7 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-2": "^6.11.0",
     "babel-register": "^6.11.6",
-    "mocha": "^3.0.1",
+    "mocha": "^5.2.0",
     "nodemon": "^1.10.0"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "lodash": "^4.17.11",
     "morgan": "^1.9.1",
     "pg": "^7.5.0",
-    "sequelize": "^4.41.0"
+    "sequelize": "^4.41.0",
+    "start": "^5.1.0"
   }
 }

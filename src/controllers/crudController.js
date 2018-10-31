@@ -4,7 +4,7 @@ import {
     Sequelize
 } from '../models'
 
-export default class CrudControler {
+export default class CrudController {
     constructor(Model) {
         this.Model = Model;
     }

@@ -1,6 +1,8 @@
 import { Sequelize, sequelize } from './base'
 import Example from './example'
 import Employee from './employee'
+import Customer from './customer'
+
 
 Example.belongsTo(Employee, {
     foreignKey: 'employee_id',
@@ -16,5 +18,6 @@ export {
     sequelize,
     
     Example,
-    Employee
+    Employee,
+    Customer
 }
