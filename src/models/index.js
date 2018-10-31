@@ -1,20 +1,16 @@
 import { Sequelize, sequelize } from './base'
 import Example from './example'
 import Employee from './employee'
-
-Example.belongsTo(Employee, {
-    foreignKey: 'employee_id',
-    as: 'employee'
-})
-Employee.hasMany(Example, {
-    foreignKey: 'employee_id',
-    as: 'examples'
-})
-
+import Film from './film'
+import Customer from './customer'
+import Bill from './bill'
 export {
     Sequelize,
     sequelize,
     
     Example,
-    Employee
+    Employee,
+    Film,
+    Customer,
+    Bill
 }
