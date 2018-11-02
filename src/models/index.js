@@ -8,6 +8,35 @@ import Seat from './seat'
 import Room from './room'
 import ScheduleFilm from './schedule_film'
 
+Seat.belongsTo(Room, {
+    foreignKey: "room_id",
+    as: "room"
+})
+
+Room.hasMany(Seat,{
+    foreignKey: "room_id",
+    as: "seats"
+})
+
+ScheduleFilm.belongsTo(Film, {
+    foreignKey: "film_id",
+    as: "film"
+})
+
+Film.hasMany(ScheduleFilm,{
+    foreignKey: "room_id",
+    as: "schedule_films"
+})
+
+ScheduleFilm.belongsTo(Room, {
+    foreignKey: "room_id",
+    as: "room"
+})
+
+Room.hasMany(ScheduleFilm,{
+    foreignKey: "room_id",
+    as: "schedule_films"
+})
 export {
     Sequelize,
     sequelize,

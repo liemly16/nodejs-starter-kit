@@ -12,7 +12,7 @@ export default sequelize.define(
             primaryKey: true
           },
           number: {
-            type: Sequelize.INTEGER, // viet lai day du INTEGER
+            type: Sequelize.INTEGER, 
           },
           name: {
             type: Sequelize.STRING,
