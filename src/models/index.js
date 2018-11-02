@@ -4,6 +4,9 @@ import Employee from './employee'
 import Film from './film'
 import Customer from './customer'
 import Bill from './bill'
+import Seat from './seat'
+import Room from './room'
+
 export {
     Sequelize,
     sequelize,
@@ -12,5 +15,7 @@ export {
     Employee,
     Film,
     Customer,
-    Bill
+    Bill,
+    Seat,
+    Room,
 }

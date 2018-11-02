@@ -1,4 +1,5 @@
 module.exports = {
+    "name": "ABC",
     "username": "ublmgxojvxmpjg",
     "password": "6a1a00f504bf823e586dbf19e17d758697af1d2393de3c387c925322f316dbd7",
     "database": "df925jgmf3d84r",
