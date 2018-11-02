@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async function (queryInterface, Sequelize) {
-    return await queryInterface.createTable('tbl_example', {
+    return await queryInterface.createTable('tbl_schedule_film', {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV1,
@@ -11,7 +11,7 @@ module.exports = {
       film_id: {
         type: Sequelize.UUID,
         references: {
-          model: 'tnl_film',
+          model: 'tbl_film',
           key: 'id'
         }
       },
@@ -48,6 +48,6 @@ module.exports = {
   },
 
   down: async function (queryInterface, Sequelize) {
-    return await queryInterface.dropTable('tbl_example');
+    return await queryInterface.dropTable('tbl_schedule_film');
   }
 };

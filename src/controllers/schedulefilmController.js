@@ -1,11 +1,11 @@
 import {
-    Schedule_film
+    ScheduleFilm
 } from '../models'
 import CrudController from './crudController'
 
 
-export default class SchedulefilmController extends CrudController {
+export default class ScheduleFilmController extends CrudController {
     constructor() {
-        super(Schedule_film)
+        super(ScheduleFilm)
     }
 }

@@ -14,7 +14,7 @@ export default sequelize.define(
       film_id: {
         type: Sequelize.UUID,
         references: {
-          model: 'tnl_film',
+          model: 'tbl_film',
           key: 'id'
         }
       },
