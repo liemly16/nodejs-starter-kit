@@ -28,6 +28,12 @@ export default sequelize.define(
       start_time: {
         type: Sequelize.STRING
       },
+      price: {
+        type: Sequelize.DOUBLE
+      },
+      price_member: {
+        type: Sequelize.DOUBLE
+      },
       type: {
         type: Sequelize.STRING,
         validate: {
