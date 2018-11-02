@@ -7,6 +7,7 @@ import Bill from './bill'
 import Seat from './seat'
 import Room from './room'
 import ScheduleFilm from './schedule_film'
+import Ticket from './ticket'
 
 Seat.belongsTo(Room, {
     foreignKey: "room_id",
@@ -37,6 +38,7 @@ Room.hasMany(ScheduleFilm,{
     foreignKey: "room_id",
     as: "schedule_films"
 })
+
 export {
     Sequelize,
     sequelize,
@@ -48,5 +50,6 @@ export {
     Bill,
     Seat,
     Room,
-    ScheduleFilm
+    ScheduleFilm,
+    Ticket
 }
