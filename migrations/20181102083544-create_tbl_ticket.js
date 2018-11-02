@@ -47,6 +47,6 @@ module.exports = {
   },
 
   down: async function (queryInterface, Sequelize) {
-    return //await queryInterface.dropTable('tbl_ticket');
+    return await queryInterface.dropTable('tbl_ticket');
   }
 };
