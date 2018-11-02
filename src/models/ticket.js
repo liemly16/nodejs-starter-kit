@@ -14,8 +14,8 @@ import {
         schedule_film_id: {
             type: Sequelize.UUID,
             references: {
-              model: tbl_film,
-              key: id,
+              model: 'tbl_film',
+              key: 'id',
             }
           },
     
@@ -30,8 +30,8 @@ import {
         seat_id:{
             type: Sequelize.UUID,
             references: {
-              model: tbl_seat,
-              key: id,
+              model: 'tbl_seat',
+              key: 'id',
             }
           },
     

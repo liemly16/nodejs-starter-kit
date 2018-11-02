@@ -7,7 +7,7 @@ import Bill from './bill'
 import Seat from './seat'
 import Room from './room'
 import ScheduleFilm from './schedule_film'
-
+import Ticket from './ticket'
 export {
     Sequelize,
     sequelize,
@@ -19,5 +19,6 @@ export {
     Bill,
     Seat,
     Room,
-    ScheduleFilm
+    ScheduleFilm,
+    Ticket
 }

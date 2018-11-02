@@ -16,7 +16,7 @@ const billController= new BillController();
 const seatController = new SeatController();
 const roomController = new RoomController();
 const schedulefilmController = new ScheduleFilmController();
-
+const ticketController = new TicketController();
 
 export {
     exampleController,
@@ -27,4 +27,5 @@ export {
     seatController,
     roomController,
     schedulefilmController,
+    ticketController,
 }
