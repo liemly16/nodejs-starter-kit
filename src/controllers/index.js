@@ -6,6 +6,8 @@ import BillController from './billController';
 import SeatController from './seatController';
 import RoomController from './roomController';
 import ScheduleFilmController from './schedulefilmController';
+import TicketController from './ticketController';
+
 const exampleController = new ExampleController();
 const employeeController= new EmployeeController();
 const filmController= new FilmController();
