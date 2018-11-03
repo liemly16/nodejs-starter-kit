@@ -8,6 +8,7 @@ import Seat from './seat'
 import Room from './room'
 import ScheduleFilm from './schedule_film'
 import Ticket from './ticket'
+import BillItem from './bill_item'
 
 Seat.belongsTo(Room, {
     foreignKey: "room_id",
@@ -51,5 +52,6 @@ export {
     Seat,
     Room,
     ScheduleFilm,
-    Ticket
+    Ticket,
+    BillItem,
 }
