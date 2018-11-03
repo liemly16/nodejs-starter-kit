@@ -1,8 +1,8 @@
 import CrudRouter from '../crud'
-import { bill_itemController } from '../../controllers'
+import { billItemController } from '../../controllers'
 
-export default class Bill_item extends CrudRouter {
+export default class BillItem extends CrudRouter {
   constructor() {
-    super(bill_itemController)
+    super(billItemController)
   }
 }
