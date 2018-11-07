@@ -40,6 +40,46 @@ Room.hasMany(ScheduleFilm,{
     as: "schedule_films"
 })
 
+Bill.belongsTo(Customer,{
+    foreignKey: "customer_id",
+    as:"customer"
+})
+
+Customer.hasMany(Bill,{
+    foreignKey:"customer_id",
+    as:"bills"
+})
+
+Bill.belongsTo(Employee,{
+    foreignKey:"employee_id",
+    as:"employee"
+})
+
+Employee.hasMany(Bill,{
+    foreignKey:"employee_id",
+    as:"bills"
+})
+
+BillItem.belongsTo(Ticket,{
+    foreignKey:"ticket_id",
+    as:"ticket"
+})
+
+Ticket.hasMany(BillItem,{
+    foreignKey:"ticket_id",
+    as:"bill_items"
+})
+
+BillItem.belongsTo(Bill,{
+    foreignKey:"bill_id",
+    as:"bill"
+})
+
+Bill.hasMany(BillItem,{
+    foreignKey:"bill_id",
+    as:"bill_items"
+})
+
 export {
     Sequelize,
     sequelize,
