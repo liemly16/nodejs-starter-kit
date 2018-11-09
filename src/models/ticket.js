@@ -14,7 +14,7 @@ import {
         schedule_film_id: {
             type: Sequelize.UUID,
             references: {
-              model: 'tbl_film',
+              model: 'tbl_schedule_film',
               key: 'id',
             }
           },
