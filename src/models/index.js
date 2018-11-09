@@ -11,7 +11,7 @@ import Ticket from './ticket'
 
 Seat.belongsTo(Room, {
     foreignKey: "room_id",
-    as: "room"
+    as: "room"                                                     
 })
 
 Room.hasMany(Seat,{
@@ -37,6 +37,26 @@ ScheduleFilm.belongsTo(Room, {
 Room.hasMany(ScheduleFilm,{
     foreignKey: "room_id",
     as: "schedule_films"
+})
+
+Ticket.belongsTo (ScheduleFilm,{
+    foreignKey: "schedule_film_id",
+    as: "schedule_film"
+})
+
+ScheduleFilm.hasMany(Ticket,{
+   foreignKey: "schedule_film_id",
+   as:  "tickets"
+})
+
+Ticket.belongsTo (Seat,{
+    foreignKey: "seat_id",
+    as: "seat"
+})
+
+Seat.hasMany (Ticket,{
+    foreignKey: "seat_id",
+    as:"tickets"
 })
 
 export {
