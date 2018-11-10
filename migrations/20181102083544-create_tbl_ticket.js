@@ -19,9 +19,10 @@ module.exports = {
       status: {
         type: Sequelize.STRING,
         validate: {
-          isIN: [
+          
+          isIn: [
             ['ORDERED','SOLD','EMPTY']
-          ]
+          ],
         }
       },
       seat_id:{
