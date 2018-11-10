@@ -17,6 +17,14 @@ export default sequelize.define(
           note:{
             type: Sequelize.STRING,
           },
+          status: {
+            type: Sequelize.STRING,
+            validate: {
+                isIn: [
+                    ['UNPAID', 'PAID', 'CANCEL']
+                ]
+            }
+          },
           customer_id:{
             type: Sequelize.UUID,
             references:{
