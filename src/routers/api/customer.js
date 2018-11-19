@@ -5,4 +5,5 @@ export default class Customer extends CrudRouter {
   constructor() {
     super(customerController)
   }
+  
 }

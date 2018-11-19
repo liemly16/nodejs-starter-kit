@@ -51,7 +51,8 @@ export default class CrudController {
         let query = Object.assign({
             where: params,
             limit: pageInfo.limit,
-            offset: pageInfo.offset
+            offset: pageInfo.offset,
+            order: params.order
         }, fields)
 
         let records = await this.exec(this.Model.findAll(query));

@@ -17,16 +17,25 @@ export default class QueryMiddleware extends BaseMiddleware {
     const page = parseInt(req.query['page'] || 1);
     const limit = parseInt(req.query['limit'] || 10);
     const offset = parseInt(req.query['offset']) || (page - 1) * limit;
-
+    const order = this._parseOrder(req)
     req.pageInfo = {
       limit,
       offset,
+      order,
       page
     }
 
     next()
   }
-
+  _parseOrder(req){
+    let order = req.query['order']
+    try {
+      order = JSON.parse(order)
+    } catch (ignore) {
+      order = null
+    }
+    return order || {}
+  }
   _parseFilter(req) {
     let filter = req.query['filter']
     try {
