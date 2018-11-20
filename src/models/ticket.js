@@ -22,7 +22,8 @@ import {
         status: {
             type: Sequelize.STRING,
             validate: {
-              isIN: [
+              
+              isIn: [
                 ['ORDERED','SOLD','EMPTY']
               ]
             }
