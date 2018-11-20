@@ -26,7 +26,7 @@ ScheduleFilm.belongsTo(Film, {
 })
 
 Film.hasMany(ScheduleFilm, {
-    foreignKey: "room_id",
+    foreignKey: "film_id",
     as: "schedule_films"
 })
 
