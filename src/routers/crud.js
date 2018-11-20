@@ -73,14 +73,13 @@ export default class CrudRouter extends BaseRouter {
   }
 
   async getList(req, res) {
-    console.log(req.fields);
     req.items = await this.Controller.getList(req.filter, req.pageInfo, req.fields);
     this.onSuccessAsList(res, req.items, undefined, req.pageInfo)
   }
 
   async update(req, res) {
     req.body = Object.assign(req.body, req.params)
-    res.item = await this.Controller.update(req.body)
+    res.item = await this.Controller.update(req.body, req.params)
     this.onSuccess(res, res.item)
   }
 
