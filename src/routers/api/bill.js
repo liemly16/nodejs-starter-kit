@@ -16,4 +16,33 @@ export default class Bill extends CrudRouter {
     this.onSuccess(res,result);
   }
 
+
+  
+customRouting(){
+  this.router.post('/findbill', this.route(this.findBill));
 }
+
+
+async findBill(req, res){
+  const result = await this.Controller.findBill(req.body);
+
+  this.onSuccess(res,result);
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
