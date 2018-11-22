@@ -94,18 +94,20 @@ export default class BillController extends CrudController {
 
     }
 
-    async findBill(params){
+    async updateStatusBill(params){
         let{
             bill_id,
         }=params;
         const transaction = await sequelize.transaction();
         try{
-            let bill=await Bill.findOne({
+            let bill = await Bill.findOne({
                 where:{
                     id: bill_id
                 },
                 transaction
             });
+
+
             await bill.update({
                 status:'PAID'
             },
@@ -115,31 +117,31 @@ export default class BillController extends CrudController {
                 },
                 transaction
             })
-    
-                let count= BillItem.length;
-                for (let i in count) {
-                    let bill_item= await BillItem.findOne({
-                        where: {
-                            bill_id: bill_id
-                        },
-                        transaction
-                    });
-                    let ticket_id=bill_item.ticket_id
-                    let ticket = await Ticket.findOne({
-                        where:{
-                            id: ticket_id
+            let bill_items = await BillItem.findAll({
+                where:{
+                        bill_id:bill_id
+                    },
+                    transaction
+                });
+            let count= bill_items.length;
+            for (let i=0;i<count;i++) {
+                    
+                let ticket = await Ticket.findOne({
+                     where:{
+                            id: bill_items[i].ticket_id
                         },
                         transaction
                     });
                     
-                    await ticket.update({
-                        status: 'SOLD'
-                    }, {
-                            where: {
-                                id: ticket_id
-                            },
-                            transaction
-                        })
+                await ticket.update({
+                    status:'SOLD'
+                    }, 
+                    {
+                        where:{
+                            id: bill_items[i].ticket_id
+                        },
+                        transaction
+                    });
                 }
                
                 transaction.commit();
