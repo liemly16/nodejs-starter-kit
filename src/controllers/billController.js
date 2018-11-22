@@ -94,4 +94,66 @@ export default class BillController extends CrudController {
 
     }
 
+    async findBill(params){
+        let{
+            bill_id,
+        }=params;
+        const transaction = await sequelize.transaction();
+        try{
+            let bill=await Bill.findOne({
+                where:{
+                    id: bill_id
+                },
+                transaction
+            });
+            await bill.update({
+                status:'PAID'
+            },
+            {
+                where:{
+                    id:bill_id
+                },
+                transaction
+            })
+    
+                let count= BillItem.length;
+                for (let i in count) {
+                    let bill_item= await BillItem.findOne({
+                        where: {
+                            bill_id: bill_id
+                        },
+                        transaction
+                    });
+                    let ticket_id=bill_item.ticket_id
+                    let ticket = await Ticket.findOne({
+                        where:{
+                            id: ticket_id
+                        },
+                        transaction
+                    });
+                    
+                    await ticket.update({
+                        status: 'SOLD'
+                    }, {
+                            where: {
+                                id: ticket_id
+                            },
+                            transaction
+                        })
+                }
+               
+                transaction.commit();
+    
+                return bill;
+        }
+        catch (e) {
+            
+            transaction.rollback();
+            console.log(e);
+            throw e;
+        }
+    }
+
+
 }
+
