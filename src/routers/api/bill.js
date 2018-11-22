@@ -6,28 +6,24 @@ export default class Bill extends CrudRouter {
     super(billController)
   }
 
-  customRouting(){
+  customRouting() {
     this.router.post('/order', this.route(this.orderFilm));
+    this.router.post('/findbill', this.route(this.findBill));
+
   }
 
-  async orderFilm(req, res){
+  async orderFilm(req, res) {
     const result = await this.Controller.orderFilm(req.body);
 
-    this.onSuccess(res,result);
+    this.onSuccess(res, result);
   }
 
 
-  
-customRouting(){
-  this.router.post('/findbill', this.route(this.findBill));
-}
+  async findBill(req, res) {
+    const result = await this.Controller.findBill(req.body);
 
-
-async findBill(req, res){
-  const result = await this.Controller.findBill(req.body);
-
-  this.onSuccess(res,result);
-}
+    this.onSuccess(res, result);
+  }
 
 }
 
