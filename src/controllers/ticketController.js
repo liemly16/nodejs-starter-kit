@@ -55,30 +55,16 @@ export default class TicketController extends CrudController {
 
             let price = 80000;
             let price_member = 50000;
-            let seat = await Seat.findOne({
-                    where: {
-                        room_id: room_id
-                    },
-                    transaction
-                });
+            
 
             let ticket = await Ticket.create({
                     schedule_film_id: schedule_film.id,
                     status: 'EMPTY',
-                    seat_id: seat.id,
                     total_price: schedule_film.price_member
                 }, {
                         transaction
                     });
-
-
-            
-
-
-
-
-
-
+           
             transaction.commit();
 
             return schedule_film;
