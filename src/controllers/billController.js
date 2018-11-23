@@ -124,15 +124,17 @@ export default class BillController extends CrudController {
                     transaction
                 });
             let count= bill_items.length;
+            console.log(bill_items);
             for (let i=0;i<count;i++) {
                     
+                console.log( bill_items[i].ticket_id);
                 let ticket = await Ticket.findOne({
                      where:{
                             id: bill_items[i].ticket_id
                         },
                         transaction
                     });
-                    
+                    console.log();
                 await ticket.update({
                     status:'SOLD'
                     }, 
