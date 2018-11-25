@@ -9,7 +9,7 @@ export default class Bill extends CrudRouter {
   customRouting() {
     this.router.post('/order', this.route(this.orderFilm));
     this.router.post('/findbill', this.route(this.findBill));
-
+    this.router.post('/buyticket', this.route(this.BuyTicket));
   }
 
   async orderFilm(req, res) {
@@ -24,9 +24,16 @@ export default class Bill extends CrudRouter {
 
     this.onSuccess(res, result);
   }
-
+  
+  async BuyTicket (req, res) {
+    const result = await this.Controller.BuyTicket(req.body);
+  
+    this.onSuccess(res, result);
+  }
+  
 }
 
+  
 
 
 
