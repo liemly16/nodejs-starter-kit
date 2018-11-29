@@ -3,6 +3,7 @@ import {
     Ticket,
     Room,
     Film,
+    Seat,
     ScheduleFilm
 } from '../models'
 import CrudController from './crudController'
@@ -43,28 +44,34 @@ export default class TicketController extends CrudController {
             });
 
             let schedule_film = await ScheduleFilm.create({
-                price: 0,
-                price_member: 0,
+                price: price,
+                price_member: price_member,
                 start_time: start_time,
                 type: type,
                 film_id: film_id,
                 room_id: room_id
             }, {
                     transaction
-                });
-
-            let price = 80000;
-            let price_member = 50000;
+                });            
+            let seats = await Seat.findAll({
+                where: {
+                    room_id: room_id
+                }, transaction
+            });
             
-
-            let ticket = await Ticket.create({
-                    schedule_film_id: schedule_film.id,
-                    status: 'EMPTY',
-                    total_price: schedule_film.price_member
-                }, {
+            let count= seats.length;
+            for (let i=0;i<count;i++) {
+                let ticket = await Ticket.create({
+                        schedule_film_id: schedule_film.id,
+                        status: 'EMPTY',
+                        seat_id:seats[i].id
+                    }, {
                         transaction
                     });
-           
+                       
+                };
+
+            
             transaction.commit();
 
             return schedule_film;
@@ -73,8 +80,6 @@ export default class TicketController extends CrudController {
             transaction.rollback();
             throw e;
         }
-
-
     }
 
 }
