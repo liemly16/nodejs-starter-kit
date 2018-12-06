@@ -13,8 +13,9 @@ export default sequelize.define(
           },
           total_price:{
             type: Sequelize.DOUBLE,
+            defaultValue: 0,
+            allowNull: false
           },
-          
           ticket_id:{
             type: Sequelize.UUID,
             references:{

@@ -10,35 +10,35 @@ export default sequelize.define(
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV1,
             primaryKey: true
-          },
-          total_price:{
+        },
+        total_price: {
             type: Sequelize.DOUBLE,
-          },
-          note:{
+        },
+        note: {
             type: Sequelize.STRING,
-          },
-          status: {
+        },
+        status: {
             type: Sequelize.STRING,
             validate: {
                 isIn: [
                     ['UNPAID', 'PAID', 'CANCEL']
                 ]
             }
-          },
-          customer_id:{
+        },
+        customer_id: {
             type: Sequelize.UUID,
-            references:{
-              model:'tbl_customer',
-              key:'id'
+            references: {
+                model: 'tbl_customer',
+                key: 'id'
             }
-          },
-          employee_id:{
+        },
+        employee_id: {
             type: Sequelize.UUID,
-            references:{
-              model:'tbl_employee',
-              key:'id'
+            references: {
+                model: 'tbl_employee',
+                key: 'id'
             }
-          },
+        },
         created_at: {
             type: 'TIMESTAMP',
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

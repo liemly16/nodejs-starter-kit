@@ -15,7 +15,7 @@ export default sequelize.define(
             type: Sequelize.STRING
           },
           start_time:{
-            type: Sequelize.STRING
+            type: 'TIMESTAMP'
           },
           description:{
             type: Sequelize.STRING
