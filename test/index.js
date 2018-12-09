@@ -42,15 +42,8 @@ async function run() {
     "phone": "0378760860",
   });
 
-  let employee = await models.Employee.create({
-    "id": "298c98b0-fafd-11e8-83b5-736c34e3a15e",
-    "fullname": "Ly Thanh Liem",
-    "email": "liemly98@gmail.com",
-    "password": "123456",
-    "avatar": null,
-    "type": "SELLER",
-  });
 
+  console.log("@@@@@@@@@@@@@@@@@@@@@");
   let ids = tickets.map(ticket => ticket.id);
 
   await controllers.billController.BuyTicket({
@@ -58,7 +51,6 @@ async function run() {
     "tickets": ids,
     "note": "mua ve",
     customer_id: customer.id,
-    employee_id: employee.id
   });
 
 }

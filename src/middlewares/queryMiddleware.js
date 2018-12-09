@@ -1,6 +1,6 @@
 import BaseMiddleware from './base'
 import _ from 'lodash';
-import { fileURLToPath } from 'url';
+import moment, { utc } from 'moment';
 
 export default class QueryMiddleware extends BaseMiddleware {
   async use(req, _res, next, defaultFields = []) {
@@ -13,7 +13,7 @@ export default class QueryMiddleware extends BaseMiddleware {
 
     const filter = this._parseFilter(req)
     req.filter = filter;
-    
+
     const page = parseInt(req.query['page'] || 1);
     const limit = parseInt(req.query['limit'] || 10);
     const offset = parseInt(req.query['offset']) || (page - 1) * limit;
@@ -32,7 +32,7 @@ export default class QueryMiddleware extends BaseMiddleware {
     try {
       filter = JSON.parse(filter)
     } catch (ignore) {
-      filter = null
+      filter = {}
     }
     return filter || {}
   }
