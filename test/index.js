@@ -42,8 +42,6 @@ async function run() {
     "phone": "0378760860",
   });
 
-
-  console.log("@@@@@@@@@@@@@@@@@@@@@");
   let ids = tickets.map(ticket => ticket.id);
 
   await controllers.billController.BuyTicket({
