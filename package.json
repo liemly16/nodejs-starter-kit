@@ -24,6 +24,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "pg": "^7.7.1",
     "sequelize": "^4.41.0",

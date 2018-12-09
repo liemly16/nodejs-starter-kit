@@ -17,7 +17,7 @@ module.exports = {
       type: {
         type: Sequelize.STRING,
         validate: {
-          isIN: [
+          isIn: [
             ['2D','3D','BIG_SCREEN','FOUR_WAY_SOUND']
           ]
         }

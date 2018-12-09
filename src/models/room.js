@@ -19,11 +19,11 @@ export default sequelize.define(
           },
           type: {
             type: Sequelize.STRING,
-            validate: {
-              isIn: [
-                ['2D','3D','BIG_SCREEN','FOUR_WAY_SOUND']
-              ]
-            }
+            // validate: {
+            //   isIn: [
+            //     ['2D','3D','BIG_SCREEN','FOUR_WAY_SOUND']
+            //   ]
+            // }
           },
           created_at: {
             type: 'TIMESTAMP',

@@ -43,8 +43,8 @@ export default class BillController extends CrudController {
                 note: note,
                 customer_id: customer_id,
                 employee_id: employee_id
-            }, 
-            {
+            },
+                {
                     transaction
                 });
 
@@ -56,7 +56,7 @@ export default class BillController extends CrudController {
                     },
                     transaction
                 });
-                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt " +  tickets[i]);
+                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt " + tickets[i]);
 
                 let bill_item = await BillItem.create({
                     bill_id: bill.id,
@@ -66,7 +66,7 @@ export default class BillController extends CrudController {
                         transaction
                     });
 
-                await Ticket.update({    
+                await Ticket.update({
                     status: 'ORDERED'
                 }, {
                         where: {
@@ -96,14 +96,14 @@ export default class BillController extends CrudController {
 
     }
 
-    async updateStatusBill(params){
-        let{
+    async updateStatusBill(params) {
+        let {
             bill_id,
-        }=params;
+        } = params;
         const transaction = await sequelize.transaction();
-        try{
+        try {
             let bill = await Bill.findOne({
-                where:{
+                where: {
                     id: bill_id
                 },
                 transaction
@@ -111,49 +111,45 @@ export default class BillController extends CrudController {
 
 
             await bill.update({
-                status:'PAID'
+                status: 'PAID'
             },
-            {
-                where:{
-                    id:bill_id
+                {
+                    where: {
+                        id: bill_id
+                    },
+                    transaction
+                })
+            let bill_items = await BillItem.findAll({
+                where: {
+                    bill_id: bill_id
                 },
                 transaction
-            })
-            let bill_items = await BillItem.findAll({
-                where:{
-                        bill_id:bill_id
+            });
+            let count = bill_items.length;
+            for (let i = 0; i < count; i++) {
+                let ticket = await Ticket.findOne({
+                    where: {
+                        id: bill_items[i].ticket_id
                     },
                     transaction
                 });
-            let count= bill_items.length;
-            console.log(bill_items);
-            for (let i=0;i<count;i++) {
-                    
-                console.log( bill_items[i].ticket_id);
-                let ticket = await Ticket.findOne({
-                     where:{
-                            id: bill_items[i].ticket_id
-                        },
-                        transaction
-                    });
-                    console.log();
                 await ticket.update({
-                    status:'SOLD'
-                    }, 
+                    status: 'SOLD'
+                },
                     {
-                        where:{
+                        where: {
                             id: bill_items[i].ticket_id
                         },
                         transaction
                     });
-                }
-               
-                transaction.commit();
-    
-                return bill;
+            }
+
+            transaction.commit();
+
+            return bill;
         }
         catch (e) {
-            
+
             transaction.rollback();
             console.log(e);
             throw e;
@@ -187,8 +183,8 @@ export default class BillController extends CrudController {
                 note: note,
                 customer_id: customer_id,
                 employee_id: employee_id
-            }, 
-            {
+            },
+                {
                     transaction
                 });
 
@@ -200,21 +196,20 @@ export default class BillController extends CrudController {
                     },
                     transaction
                 });
-                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt " +  tickets[i]);
+                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt " + tickets[i]);
 
                 let bill_item = await BillItem.create(
                     {
-                         bill_id: bill.id,
-                         ticket_id: tickets[i],
-                         total_price: schedule_film.price  
+                        bill_id: bill.id,
+                        ticket_id: tickets[i],
+                        total_price: schedule_film.price
                     },
                     {
                         transaction
                     });
 
-               
-                if (customer_id != null)
-                {
+
+                if (!customer_id) {
                     await bill_item.update(
                         {
                             total_price: schedule_film.price_member
@@ -225,12 +220,11 @@ export default class BillController extends CrudController {
                     )
                     total_price += schedule_film.price_member;
                 }
-                else
-                {
+                else {
                     total_price += schedule_film.price;
                 }
-                
-                await Ticket.update({    
+
+                await Ticket.update({
                     status: 'SOLD'
                 }, {
                         where: {
@@ -239,14 +233,14 @@ export default class BillController extends CrudController {
                         transaction
                     }
 
-                    )
-                
+                )
+
             }
-                //Tra tien lien -> Cap nhat trang thai bill
+            //Tra tien lien -> Cap nhat trang thai bill
             await bill.update({
                 total_price: total_price,
                 status: 'PAID'
-             }, 
+            },
                 {
                     transaction
                 });
