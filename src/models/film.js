@@ -18,7 +18,7 @@ export default sequelize.define(
             type: 'TIMESTAMP'
           },
           description:{
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
           },
           avatar:{
             type:Sequelize.STRING

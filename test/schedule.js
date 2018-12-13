@@ -4,7 +4,7 @@ var moment = require('moment');
 
 async function run() {
   let film = await models.Film.create({
-    name: "Avengers 5",
+    name: "Avengers 4",
     start_time: moment().add(5, "days").format(),
     description: '',
     avatar: 'http://genknews.genkcdn.vn/zoom/220_160/2018/12/4/avata-15439400877851740928372.jpg',
@@ -20,7 +20,7 @@ async function run() {
 
   console.log("##########################");
   let schedule_film = await controllers.ticketController.createScheduleFilm({
-    "film_id": film.id || "9ad1b280-fee5-11e8-b91c-6b8ff71f3b80",
+    "film_id": film.id,
     "room_id": rooms.room.id,
     "start_time": moment().add(10, "days").format(),
     "price": 80000,

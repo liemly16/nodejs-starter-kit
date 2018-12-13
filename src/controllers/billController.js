@@ -8,6 +8,7 @@ import {
 import CrudController from './crudController'
 import { errorService } from '../services'
 import { isNullOrUndefined } from 'util';
+import moment from 'moment';
 
 
 export default class BillController extends CrudController {
@@ -202,7 +203,8 @@ export default class BillController extends CrudController {
                     {
                         bill_id: bill.id,
                         ticket_id: tickets[i],
-                        total_price: schedule_film.price
+                        total_price: schedule_film.price,
+                        //created_at: moment().add(-1, "days").format()
                     },
                     {
                         transaction
