@@ -43,6 +43,7 @@ export default class BillController extends CrudController {
                 total_price: 0,
                 note: note,
                 customer_id: customer_id,
+                status: 'UNPAID',
                 employee_id: employee_id
             },
                 {
@@ -55,9 +56,14 @@ export default class BillController extends CrudController {
                     where: {
                         id: tickets[i]
                     },
+                    include: [
+                        {
+                            association: 'seat'
+                        }
+                    ],
                     transaction
                 });
-                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt " + tickets[i]);
+                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt");
 
                 let bill_item = await BillItem.create({
                     bill_id: bill.id,
@@ -77,6 +83,7 @@ export default class BillController extends CrudController {
                     })
 
                 total_price += schedule_film.price_member;
+                total_price += ticket.seat.sub_fee;
             }
 
             await bill.update({
@@ -195,9 +202,12 @@ export default class BillController extends CrudController {
                     where: {
                         id: tickets[i]
                     },
+                    include: [{
+                        association: 'seat'
+                    }],
                     transaction
                 });
-                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt " + tickets[i]);
+                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt");
 
                 let bill_item = await BillItem.create(
                     {
@@ -225,7 +235,7 @@ export default class BillController extends CrudController {
                 else {
                     total_price += schedule_film.price;
                 }
-
+                total_price += ticket.seat.sub_fee;
                 await Ticket.update({
                     status: 'SOLD'
                 }, {
@@ -317,6 +327,108 @@ export default class BillController extends CrudController {
             console.log(e);
             throw e;
         }
+    }
+
+    async updateOrderFilm(params) {
+        let {
+            bill_id,
+            tickets
+        } = params;
+
+        const transaction = await sequelize.transaction();
+
+        try {
+            let bill = await Bill.findOne({
+                where: {
+                    id: bill_id
+                },
+                include: [
+                    {
+                        association: 'bill_items'
+                    }
+                ],
+                transaction
+            });
+
+            let ids = bill.bill_items.map(item => item.id);
+            let ticket_ids = bill.bill_items.map(item => item.ticket_id);
+
+            await Promise.all([
+                BillItem.destroy({
+                    where: {
+                        id: {
+                            $in: ids
+                        }
+                    },
+                    transaction
+                }),
+                Ticket.update({
+
+                }, {
+                        where: {
+                            id: {
+                                $in: ticket_ids
+                            }
+                        },
+                        transaction
+                    })
+            ]);
+
+            let total_price = 0;
+            for (let i in tickets) {
+                let ticket = await Ticket.findOne({
+                    where: {
+                        id: tickets[i]
+                    },
+                    include: [
+                        {
+                            association: 'seat'
+                        },
+                        {
+                            association: 'schedule_film'
+                        }
+                    ],
+                    transaction
+                });
+                if (ticket.status != 'EMPTY') throw errorService.error("Vé đã được đặt");
+
+                let bill_item = await BillItem.create({
+                    bill_id: bill.id,
+                    ticket_id: tickets[i],
+                    total_price: ticket.schedule_film.price_member
+                }, {
+                        transaction
+                    });
+
+                await Ticket.update({
+                    status: 'ORDERED'
+                }, {
+                        where: {
+                            id: tickets[i]
+                        },
+                        transaction
+                    })
+
+                total_price += ticket.schedule_film.price_member;
+                total_price += ticket.seat.sub_fee;
+            }
+
+            await bill.update({
+                total_price: total_price
+            }, {
+                    transaction
+                });
+
+
+            transaction.commit();
+
+            return bill;
+        }
+        catch (e) {
+            transaction.rollback();
+            throw e;
+        }
+
     }
 
 }
