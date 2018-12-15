@@ -363,7 +363,7 @@ export default class BillController extends CrudController {
                     transaction
                 }),
                 Ticket.update({
-
+                    status: 'EMPTY'
                 }, {
                         where: {
                             id: {
