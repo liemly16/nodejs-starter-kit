@@ -25,7 +25,7 @@ export default class BillController extends CrudController {
             note
         } = params;
 
-        const transaction = await sequelize.transaction();
+        const transaction = await sequelize.transaction({isolationLevel: sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ});
 
         try {
             // handle code
@@ -174,7 +174,7 @@ export default class BillController extends CrudController {
         } = params;
 
         //Tao transaction
-        const transaction = await sequelize.transaction();
+        const transaction = await sequelize.transaction({isolationLevel: sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ});
 
         try {
 
@@ -335,7 +335,7 @@ export default class BillController extends CrudController {
             tickets
         } = params;
 
-        const transaction = await sequelize.transaction();
+        const transaction = await sequelize.transaction({isolationLevel: sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ});
 
         try {
             let bill = await Bill.findOne({
