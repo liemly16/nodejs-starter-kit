@@ -3,7 +3,8 @@ import {
     Bill,
     BillItem,
     ScheduleFilm,
-    Ticket
+    Ticket,
+    Customer
 } from '../models'
 import CrudController from './crudController'
 import { errorService } from '../services'
@@ -31,6 +32,7 @@ export default class BillController extends CrudController {
             // handle code
             // check
 
+            let discount = 0;
             let schedule_film = await ScheduleFilm.findOne({
                 where: {
                     id: schedule_film_id
@@ -85,6 +87,7 @@ export default class BillController extends CrudController {
                 total_price += schedule_film.price_member;
                 total_price += ticket.seat.sub_fee;
             }
+            total_price -= discount;
 
             await bill.update({
                 total_price: total_price
@@ -196,6 +199,20 @@ export default class BillController extends CrudController {
                     transaction
                 });
 
+            let discount = 0;
+            let customer = await Customer.findOne({
+                where: {
+                    id: customer_id
+                },
+                transaction
+            });
+
+            if (customer)
+                if (parseInt(customer.birthday.split('/')[0]) == moment().get('date') && parseInt(customer.birthday.split('/')[1]) == moment().get('month') + 1) {
+                    discount = schedule_film.price_member;
+                }
+
+
             let total_price = 0;
             for (let i in tickets) {
                 let ticket = await Ticket.findOne({
@@ -248,6 +265,8 @@ export default class BillController extends CrudController {
                 )
 
             }
+
+            total_price -= discount;
             //Tra tien lien -> Cap nhat trang thai bill
             await bill.update({
                 total_price: total_price,
