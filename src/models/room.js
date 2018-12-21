@@ -41,7 +41,7 @@ export default sequelize.define(
         timestamps: true,
         underscored: true,
         freezeTableName: true,
-        paranoid: true,
+        paranoid: false,
         defaultScope: {
             attributes: { exclude: ['deleted_at'] }
         },

@@ -2,11 +2,12 @@ import {
     ScheduleFilm,
     BillItem,
     Bill,
-
+    Ticket,
     sequelize
 } from '../models'
 import CrudController from './crudController'
 import _ from 'lodash';
+import { errorService } from '../services';
 
 export default class ScheduleFilmController extends CrudController {
     constructor() {
@@ -128,10 +129,49 @@ export default class ScheduleFilmController extends CrudController {
                 break;
         }
 
-        let result =  await sequelize.query(query, {
+        let result = await sequelize.query(query, {
             type: sequelize.QueryTypes.SELECT
         });
 
         return _.groupBy(result, 'id');
     }
+
+    async delete(params) {
+        console.log(params);
+
+        const transaction = await sequelize.transaction();
+
+        try {
+            let ticket = await Ticket.findOne({
+                where: {
+                    schedule_film_id: params.id,
+                    status: {
+                        $ne: 'EMPTY'
+                    }
+                },
+                transaction
+            });
+            console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            console.log(ticket);
+            if (ticket) throw errorService.error("Không thể xoá lịch chiếu vì đã có người đặt");
+
+            let item = await ScheduleFilm.destroy({
+                where: {
+                    id: params.id
+                },
+                transaction
+            }, {
+                returning: true
+            });
+
+            transaction.commit();
+            return item
+        }
+        catch (e) {
+            transaction.rollback();
+            throw e;
+        }
+    }
+
+
 }

@@ -2,6 +2,8 @@ import {
     sequelize,
     Sequelize
 } from './base'
+import withDateNoTz from 'sequelize-date-no-tz-postgres';
+const DataTypes = withDateNoTz(Sequelize);
 
 export default sequelize.define(
     'tbl_film',
@@ -15,7 +17,7 @@ export default sequelize.define(
             type: Sequelize.STRING
           },
           start_time:{
-            type: 'TIMESTAMP'
+            type: DataTypes.DATE_NO_TZ
           },
           description:{
             type: Sequelize.TEXT
@@ -50,7 +52,7 @@ export default sequelize.define(
         timestamps: true,
         underscored: true,
         freezeTableName: true,
-        paranoid: true,
+        paranoid: false,
         defaultScope: {
             attributes: { exclude: ['deleted_at'] }
         },

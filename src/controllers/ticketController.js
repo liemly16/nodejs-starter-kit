@@ -58,8 +58,6 @@ export default class TicketController extends CrudController {
                     status: true
                 }
             }
-
-            return schedule_film;
         }
         catch (e) {
             transaction.rollback();
@@ -82,6 +80,27 @@ export default class TicketController extends CrudController {
 
         try {
 
+            let fromTime = moment(start_time).add(-2, "hours").format();
+            let toTime = moment(start_time).add(2, "hours").format();
+            let schedule_film = await ScheduleFilm.findOne({
+                where: {
+                    room_id: room_id,
+                    start_time: {
+                        $and: [
+                            {
+                                $gte: fromTime
+                            },
+                            {
+                                $lte: toTime
+                            }
+                        ]
+                    }
+
+                },
+                transaction
+            });
+            if (schedule_film) throw errorService.error("Phòng không còn trống");
+
             let film = await Film.findOne({
                 where: {
                     id: film_id
@@ -96,7 +115,7 @@ export default class TicketController extends CrudController {
                 transaction
             });
 
-            let schedule_film = await ScheduleFilm.create({
+            schedule_film = await ScheduleFilm.create({
                 price: price,
                 price_member: price_member,
                 start_time: start_time,
@@ -123,7 +142,6 @@ export default class TicketController extends CrudController {
                     });
 
             };
-
 
             transaction.commit();
 

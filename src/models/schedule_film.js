@@ -2,6 +2,8 @@ import {
   sequelize,
   Sequelize
 } from './base'
+import withDateNoTz from 'sequelize-date-no-tz-postgres';
+const DataTypes = withDateNoTz(Sequelize);
 
 export default sequelize.define(
   'tbl_schedule_film',
@@ -26,7 +28,7 @@ export default sequelize.define(
       }
     },
     start_time: {
-      type: 'TIMESTAMP'
+      type: DataTypes.DATE_NO_TZ
     },
     price: {
       type: Sequelize.DOUBLE,
