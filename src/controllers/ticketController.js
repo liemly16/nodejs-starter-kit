@@ -24,8 +24,8 @@ export default class TicketController extends CrudController {
         const transaction = await sequelize.transaction();
 
         try {
-            let fromTime = moment().add(-2, "hours").utc().format();
-            let toTime = moment().add(2, "hours").utc().format();
+            let fromTime = moment().add(5, "hours").utc().format();
+            let toTime = moment().add(9, "hours").utc().format();
             let schedule_film = await ScheduleFilm.findOne({
                 where: {
                     $or: [

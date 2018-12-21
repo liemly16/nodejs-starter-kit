@@ -11,10 +11,46 @@ export default class RoomController extends CrudController {
         super(Room)
     }
 
+    async delete(params) {
+
+        const transaction = await sequelize.transaction();
+
+        try {
+            await Seat.destroy({
+                where: {
+                    room_id: params.id
+                },
+                transaction
+            });
+
+            let result = await Room.destroy({
+                where: {
+                    id: params.id
+                },
+                transaction
+            });
+
+            transaction.commit();
+
+            return result;
+        }
+        catch (e) {
+            transaction.rollback();
+            throw e;
+        }
+
+        console.log("@@@@@@@@@@@@@@@@@@@@@");
+        console.log(params);
+        const item = await this.exec(this.getItem(params));
+        return await this.exec(item.destroy(params, {
+            returning: true
+        }))
+    }
+
     async create(params) {
-let {
-    seats
-} = params;
+        let {
+            seats
+        } = params;
 
         const transaction = await sequelize.transaction();
         const arr = [

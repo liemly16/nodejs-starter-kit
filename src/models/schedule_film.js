@@ -3,6 +3,7 @@ import {
   Sequelize
 } from './base'
 import withDateNoTz from 'sequelize-date-no-tz-postgres';
+import moment from 'moment';
 const DataTypes = withDateNoTz(Sequelize);
 
 export default sequelize.define(
