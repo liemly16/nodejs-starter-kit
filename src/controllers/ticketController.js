@@ -80,8 +80,8 @@ export default class TicketController extends CrudController {
 
         try {
 
-            let fromTime = moment(start_time).add(-2, "hours").format();
-            let toTime = moment(start_time).add(2, "hours").format();
+            let fromTime = moment(start_time).add(5, "hours").format();
+            let toTime = moment(start_time).add(9, "hours").format();
             let schedule_film = await ScheduleFilm.findOne({
                 where: {
                     room_id: room_id,
